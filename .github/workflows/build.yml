@@ -16,11 +16,24 @@ jobs:
           curl -fsSL https://pixi.sh/install.sh | bash
           echo "$HOME/.pixi/bin" >> $GITHUB_PATH
 
-      - name: Create pixi project and install Mojo
+      - name: Create pixi.toml for Mojo
         run: |
-          pixi init mojo_env
+          mkdir -p mojo_env
+          cat > mojo_env/pixi.toml << 'TOML'
+          [project]
+          name = "mojo_env"
+          version = "0.1.0"
+          channels = ["conda-forge", "https://conda.modular.com/max"]
+          platforms = ["linux-64"]
+
+          [dependencies]
+          max = "*"
+          TOML
+
+      - name: Install Mojo via pixi
+        run: |
           cd mojo_env
-          pixi add max --channel conda-forge --channel https://conda.modular.com/max
+          pixi install
 
       - name: Build AuraCore
         run: |
