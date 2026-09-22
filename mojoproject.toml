@@ -1,0 +1,13 @@
+[project]
+name        = "auracore"
+version     = "0.1.0-alpha"
+description = "Ultra-high-performance local AI agent framework"
+authors     = ["lamin-16"]
+license     = "Proprietary"
+
+[build]
+entry       = "src/cli_interface.mojo"
+output      = "build/auracore"
+
+[dependencies]
+link_flags  = ["-lcrypto"]
