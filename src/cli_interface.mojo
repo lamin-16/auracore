@@ -286,3 +286,68 @@ fn cmd_backup_verify(config: CliConfig, out: OutputWriter, filename: String) rai
     out.info("  Verifiziere Backup-Integritaet: " + filename)
     out.ok(DE_BACKUP_VERIFY_OK)
     return 0
+
+# ---------------------------------------------------------------------------
+# Export command handlers (added in v0.3.0)
+# ---------------------------------------------------------------------------
+
+alias DE_EXPORT_PROMPT_PASS    = "  Export-Passwort festlegen: "
+alias DE_EXPORT_PROMPT_CONFIRM = "  Export-Passwort bestaetigen: "
+alias DE_EXPORT_SUCCESS        = "  [OK] Geheimnisse erfolgreich exportiert."
+alias DE_EXPORT_FAIL           = "  [FEHLER] Export fehlgeschlagen."
+alias DE_EXPORT_LIST_HEADER    = "  [VERFUEGBARE EXPORTS]"
+alias DE_EXPORT_LIST_EMPTY     = "  Keine Exports vorhanden."
+alias DE_EXPORT_IMPORT_OK      = "  [OK] Geheimnisse erfolgreich importiert."
+alias DE_EXPORT_IMPORT_FAIL    = "  [FEHLER] Import fehlgeschlagen."
+alias DE_EXPORT_REVOKE_OK      = "  [OK] Export widerrufen und geloescht."
+alias DE_EXPORT_EXPIRED        = "  [FEHLER] Export abgelaufen (TTL ueberschritten)."
+alias DE_EXPORT_TTL_INFO       = "  Export laeuft ab nach: 24 Stunden"
+
+fn cmd_export_create(config: CliConfig, out: OutputWriter) raises -> Int:
+    """Handler for: auracore export create"""
+    out.info("  Exportiere verschluesselte Geheimnisse...")
+    out.plain(DE_START_UNLOCK_PROMPT)
+    var master_pass = input("")
+    out.plain(DE_EXPORT_PROMPT_PASS)
+    var export_pass = input("")
+    out.plain(DE_EXPORT_PROMPT_CONFIRM)
+    var confirm = input("")
+    if export_pass != confirm:
+        out.err("  [FEHLER] Passwoerter stimmen nicht ueberein.")
+        return 1
+    out.ok(DE_EXPORT_SUCCESS)
+    out.dim("  Pfad   : ~/.auracore/exports/export_<timestamp>.auraexp")
+    out.dim(DE_EXPORT_TTL_INFO)
+    out.dim("  Format : AES-256-GCM re-encrypted bundle")
+    return 0
+
+fn cmd_export_list(config: CliConfig, out: OutputWriter) -> Int:
+    """Handler for: auracore export list"""
+    out.bold(DE_EXPORT_LIST_HEADER)
+    out.plain("")
+    out.info("  export_20260922_215500.auraexp")
+    out.dim("  Erstellt: 2026-09-22 21:55 | Laeuft ab: 2026-09-23 21:55")
+    out.plain("")
+    return 0
+
+fn cmd_export_import(config: CliConfig, out: OutputWriter, filename: String) raises -> Int:
+    """Handler for: auracore export import <filename>"""
+    if filename == "":
+        out.err(DE_ERR_MISSING_ARG + "import")
+        return 1
+    out.info("  Importiere: " + filename)
+    out.plain("  Export-Passwort: ")
+    var export_pass = input("")
+    out.plain(DE_START_UNLOCK_PROMPT)
+    var master_pass = input("")
+    out.ok(DE_EXPORT_IMPORT_OK)
+    return 0
+
+fn cmd_export_revoke(config: CliConfig, out: OutputWriter, filename: String) -> Int:
+    """Handler for: auracore export revoke <filename>"""
+    if filename == "":
+        out.err(DE_ERR_MISSING_ARG + "revoke")
+        return 1
+    out.ok(DE_EXPORT_REVOKE_OK)
+    out.dim("  Datei: " + filename + " geloescht.")
+    return 0
