@@ -1,0 +1,8 @@
+build/
+*.enc
+*.key
+*.pem
+.env
+__pycache__/
+*.pyc
+mojo_env/
