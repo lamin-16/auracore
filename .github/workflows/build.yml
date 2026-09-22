@@ -13,18 +13,22 @@ jobs:
 
       - name: Install Magic
         run: |
-          curl -fsSL https://magic.modular.com/install.sh -o install.sh
-          bash install.sh
+          curl -fsSL https://dl.modular.com/public/magic/resolve/sh | bash
           echo "$HOME/.modular/bin" >> $GITHUB_PATH
 
       - name: Install Mojo
-        run: magic install mojo
+        run: |
+          export PATH="$HOME/.modular/bin:$PATH"
+          magic install mojo
 
       - name: Verify Mojo
-        run: mojo --version
+        run: |
+          export PATH="$HOME/.modular/bin:$PATH"
+          mojo --version
 
       - name: Build AuraCore
         run: |
+          export PATH="$HOME/.modular/bin:$PATH"
           mkdir -p build
           mojo build src/cli_interface.mojo -o build/auracore
 
