@@ -11,26 +11,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Magic
+      - name: Install Modular and Mojo
         run: |
-          curl -fsSL https://dl.modular.com/public/magic/resolve/sh | bash
+          curl -fsSL https://dl.modular.com/public/magic/resolve/sh | sh
+          source ~/.bashrc || true
+          ~/.modular/bin/magic init
+          ~/.modular/bin/magic add max
           echo "$HOME/.modular/bin" >> $GITHUB_PATH
 
-      - name: Install Mojo
-        run: |
-          export PATH="$HOME/.modular/bin:$PATH"
-          magic install mojo
-
       - name: Verify Mojo
-        run: |
-          export PATH="$HOME/.modular/bin:$PATH"
-          mojo --version
+        run: ~/.modular/bin/magic run mojo --version
 
       - name: Build AuraCore
         run: |
-          export PATH="$HOME/.modular/bin:$PATH"
           mkdir -p build
-          mojo build src/cli_interface.mojo -o build/auracore
+          ~/.modular/bin/magic run mojo build src/cli_interface.mojo -o build/auracore
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
