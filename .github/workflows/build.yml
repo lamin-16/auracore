@@ -7,25 +7,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: modularml/mojo:latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Modular and Mojo
-        run: |
-          curl -fsSL https://dl.modular.com/public/magic/resolve/sh | sh
-          source ~/.bashrc || true
-          ~/.modular/bin/magic init
-          ~/.modular/bin/magic add max
-          echo "$HOME/.modular/bin" >> $GITHUB_PATH
-
       - name: Verify Mojo
-        run: ~/.modular/bin/magic run mojo --version
+        run: mojo --version
 
       - name: Build AuraCore
         run: |
           mkdir -p build
-          ~/.modular/bin/magic run mojo build src/cli_interface.mojo -o build/auracore
+          mojo build src/cli_interface.mojo -o build/auracore
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
