@@ -11,22 +11,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Magic via apt
+      - name: Install pixi
         run: |
-          curl -fsSL https://pkgs.modular.com/public/magic/setup.deb.sh | sudo bash
-          sudo apt-get install -y magic
+          curl -fsSL https://pixi.sh/install.sh | bash
+          echo "$HOME/.pixi/bin" >> $GITHUB_PATH
 
-      - name: Install Mojo
+      - name: Create pixi project and install Mojo
         run: |
-          magic init auracore_env --format mojoproject
-          cd auracore_env
-          magic add max
+          pixi init mojo_env
+          cd mojo_env
+          pixi add max --channel conda-forge --channel https://conda.modular.com/max
 
       - name: Build AuraCore
         run: |
           mkdir -p build
-          cd auracore_env
-          magic run mojo build ../src/cli_interface.mojo -o ../build/auracore
+          cd mojo_env
+          pixi run mojo build ../src/cli_interface.mojo -o ../build/auracore
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
