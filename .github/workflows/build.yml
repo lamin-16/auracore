@@ -1,0 +1,38 @@
+name: AuraCore Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Magic
+        run: |
+          curl -ssL https://magic.modular.com | bash
+          echo "$HOME/.modular/bin" >> $GITHUB_PATH
+
+      - name: Install Mojo
+        run: |
+          magic install mojo
+
+      - name: Verify Mojo
+        run: mojo --version
+
+      - name: Build AuraCore
+        run: |
+          mkdir -p build
+          mojo build src/cli_interface.mojo -o build/auracore
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: auracore-linux-x64
+          path: build/auracore
