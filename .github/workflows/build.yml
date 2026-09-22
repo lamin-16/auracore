@@ -3,25 +3,22 @@ name: AuraCore Build
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Install Magic
         run: |
-          curl -ssL https://magic.modular.com | bash
+          curl -fsSL https://magic.modular.com/install.sh -o install.sh
+          bash install.sh
           echo "$HOME/.modular/bin" >> $GITHUB_PATH
 
       - name: Install Mojo
-        run: |
-          magic install mojo
+        run: magic install mojo
 
       - name: Verify Mojo
         run: mojo --version
