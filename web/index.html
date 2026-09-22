@@ -5,419 +5,140 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AuraCore — Local AI Agent Framework</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: #0a0a0f;
-      color: #e2e8f0;
-      overflow-x: hidden;
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      background: radial-gradient(ellipse at top, #1a1a3e 0%, #0a0a0f 70%);
-      position: relative;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234f46e5' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-
-    .badge {
-      display: inline-block;
-      background: rgba(79, 70, 229, 0.2);
-      border: 1px solid rgba(79, 70, 229, 0.5);
-      color: #818cf8;
-      padding: 0.4rem 1rem;
-      border-radius: 9999px;
-      font-size: 0.85rem;
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.05em;
-    }
-
-    .logo {
-      font-size: 4rem;
-      font-weight: 900;
-      background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #38bdf8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 0.5rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .tagline {
-      font-size: 1.3rem;
-      color: #94a3b8;
-      margin-bottom: 2.5rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .stats {
-      display: flex;
-      gap: 2rem;
-      margin-bottom: 3rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
-    .stat-number {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #818cf8;
-    }
-
-    .stat-label {
-      font-size: 0.8rem;
-      color: #64748b;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
-      color: white;
-      padding: 0.8rem 2rem;
-      border-radius: 0.5rem;
-      text-decoration: none;
-      font-weight: 600;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.6);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.05);
-      color: #e2e8f0;
-      padding: 0.8rem 2rem;
-      border-radius: 0.5rem;
-      text-decoration: none;
-      font-weight: 600;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: background 0.2s;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.1);
-    }
-
-    .features {
-      padding: 5rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 3rem;
-      background: linear-gradient(135deg, #818cf8, #c084fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 1rem;
-      padding: 2rem;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-
-    .card:hover {
-      border-color: rgba(79, 70, 229, 0.5);
-      transform: translateY(-4px);
-    }
-
-    .card-icon {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #e2e8f0;
-      margin-bottom: 0.5rem;
-    }
-
-    .card-desc {
-      color: #64748b;
-      font-size: 0.9rem;
-      line-height: 1.6;
-    }
-
-    .security {
-      background: rgba(79, 70, 229, 0.05);
-      border-top: 1px solid rgba(79, 70, 229, 0.2);
-      border-bottom: 1px solid rgba(79, 70, 229, 0.2);
-      padding: 5rem 2rem;
-    }
-
-    .security-inner {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .security-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-
-    .sec-item {
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(79, 70, 229, 0.3);
-      border-radius: 0.75rem;
-      padding: 1.25rem;
-    }
-
-    .sec-label {
-      font-size: 0.75rem;
-      color: #818cf8;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 0.3rem;
-    }
-
-    .sec-value {
-      font-size: 0.95rem;
-      color: #e2e8f0;
-      font-weight: 600;
-    }
-
-    .code-section {
-      padding: 5rem 2rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .code-block {
-      background: #0d1117;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
-      overflow-x: auto;
-    }
-
-    .code-block .comment { color: #6e7681; }
-    .code-block .cmd { color: #79c0ff; }
-    .code-block .string { color: #a5d6ff; }
-
-    footer {
-      text-align: center;
-      padding: 3rem 2rem;
-      color: #334155;
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-
-    footer a {
-      color: #818cf8;
-      text-decoration: none;
-    }
-
-    .terminal-bar {
-      display: flex;
-      gap: 0.4rem;
-      margin-bottom: 1rem;
-    }
-
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-
-    .dot-red { background: #ff5f57; }
-    .dot-yellow { background: #febc2e; }
-    .dot-green { background: #28c840; }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a0f;color:#e2e8f0;overflow-x:hidden}
+    .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;background:radial-gradient(ellipse at top,#1a1a3e 0%,#0a0a0f 70%)}
+    .badge{display:inline-block;background:rgba(79,70,229,.2);border:1px solid rgba(79,70,229,.5);color:#818cf8;padding:.4rem 1rem;border-radius:9999px;font-size:.85rem;margin-bottom:1.5rem}
+    .logo{font-size:4rem;font-weight:900;background:linear-gradient(135deg,#818cf8 0%,#c084fc 50%,#38bdf8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
+    .tagline{font-size:1.2rem;color:#94a3b8;margin-bottom:2.5rem}
+    .stats{display:flex;gap:2rem;margin-bottom:3rem;flex-wrap:wrap;justify-content:center}
+    .stat-number{font-size:2rem;font-weight:700;color:#818cf8}
+    .stat-label{font-size:.8rem;color:#64748b;text-transform:uppercase;letter-spacing:.1em}
+    .buttons{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+    .btn-primary{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;padding:.8rem 2rem;border-radius:.5rem;text-decoration:none;font-weight:600;box-shadow:0 4px 15px rgba(79,70,229,.4)}
+    .btn-secondary{background:rgba(255,255,255,.05);color:#e2e8f0;padding:.8rem 2rem;border-radius:.5rem;text-decoration:none;font-weight:600;border:1px solid rgba(255,255,255,.1)}
+    .section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+    .section-title{text-align:center;font-size:2rem;font-weight:700;margin-bottom:3rem;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+    .card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:1rem;padding:2rem;transition:border-color .3s,transform .3s}
+    .card:hover{border-color:rgba(79,70,229,.5);transform:translateY(-4px)}
+    .card-icon{font-size:2.5rem;margin-bottom:1rem}
+    .card-title{font-size:1.1rem;font-weight:700;color:#e2e8f0;margin-bottom:.5rem}
+    .card-desc{color:#64748b;font-size:.9rem;line-height:1.6}
+    .security-bg{background:rgba(79,70,229,.05);border-top:1px solid rgba(79,70,229,.2);border-bottom:1px solid rgba(79,70,229,.2);padding:5rem 2rem}
+    .sec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:2rem;max-width:900px;margin-left:auto;margin-right:auto}
+    .sec-item{background:rgba(0,0,0,.3);border:1px solid rgba(79,70,229,.3);border-radius:.75rem;padding:1.25rem}
+    .sec-label{font-size:.75rem;color:#818cf8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem}
+    .sec-value{font-size:.95rem;color:#e2e8f0;font-weight:600}
+    .code-block{background:#0d1117;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.5rem;font-family:'Courier New',monospace;font-size:.85rem;overflow-x:auto}
+    .comment{color:#6e7681}
+    .cmd{color:#79c0ff}
+    .string{color:#a5d6ff}
+    .dot-row{display:flex;gap:.4rem;margin-bottom:1rem}
+    .dot{width:12px;height:12px;border-radius:50%}
+    .new-badge{display:inline-block;background:rgba(34,197,94,.2);border:1px solid rgba(34,197,94,.5);color:#4ade80;padding:.2rem .6rem;border-radius:9999px;font-size:.7rem;margin-left:.5rem;vertical-align:middle}
+    footer{text-align:center;padding:3rem 2rem;color:#334155;border-top:1px solid rgba(255,255,255,.05)}
+    footer a{color:#818cf8;text-decoration:none}
+    .version-tag{display:inline-block;background:rgba(129,140,248,.1);border:1px solid rgba(129,140,248,.3);color:#818cf8;padding:.2rem .8rem;border-radius:9999px;font-size:.8rem;margin-top:1rem}
   </style>
 </head>
 <body>
 
-  <section class="hero">
-    <div class="badge">v0.1.0-alpha — Quartz</div>
-    <div class="logo">AuraCore</div>
-    <p class="tagline">Ultraschnell · Lokal · Verschluesselt · Zero-Dependency</p>
+<section class="hero">
+  <div class="badge">v0.2.0 — Quartz</div>
+  <div class="logo">AuraCore</div>
+  <p class="tagline">Ultraschnell · Lokal · Verschluesselt · Zero-Dependency</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-number">1,629+</div><div class="stat-label">Lines of Mojo</div></div>
+    <div class="stat"><div class="stat-number">AES-256</div><div class="stat-label">Encryption</div></div>
+    <div class="stat"><div class="stat-number">600K</div><div class="stat-label">KDF Iterations</div></div>
+    <div class="stat"><div class="stat-number">0</div><div class="stat-label">Dependencies</div></div>
+  </div>
+  <div class="buttons">
+    <a href="https://github.com/lamin-16/auracore" class="btn-primary">View on GitHub</a>
+    <a href="#features" class="btn-secondary">Learn More</a>
+  </div>
+</section>
 
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-number">1,629</div>
-        <div class="stat-label">Lines of Mojo</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">AES-256</div>
-        <div class="stat-label">Encryption</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">600K</div>
-        <div class="stat-label">KDF Iterations</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">0</div>
-        <div class="stat-label">Dependencies</div>
-      </div>
+<section class="section" id="features">
+  <h2 class="section-title">Core Features</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="card-icon">🔐</div>
+      <div class="card-title">Secure Vault</div>
+      <div class="card-desc">AES-256-GCM authenticated encryption with PBKDF2-HMAC-SHA512 key derivation. Your secrets never leave your device.</div>
     </div>
-
-    <div class="buttons">
-      <a href="https://github.com/lamin-16/auracore" class="btn-primary">
-        View on GitHub
-      </a>
-      <a href="#features" class="btn-secondary">
-        Learn More
-      </a>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">High Performance</div>
+      <div class="card-desc">Built in Mojo for native binary performance. Zero-allocation hot path with ring buffer token processing.</div>
     </div>
-  </section>
-
-  <section class="features" id="features">
-    <h2 class="section-title">Core Features</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="card-icon">🔐</div>
-        <div class="card-title">Secure Vault</div>
-        <div class="card-desc">AES-256-GCM authenticated encryption with PBKDF2-HMAC-SHA512 key derivation. Your secrets never leave your device.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">⚡</div>
-        <div class="card-title">High Performance</div>
-        <div class="card-desc">Built in Mojo for native binary performance. Zero-allocation hot path with ring buffer token processing.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🤖</div>
-        <div class="card-title">Local AI Agent</div>
-        <div class="card-desc">Connects to local LLM backends via Unix socket. Full context window management with 4096 token support.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🖥️</div>
-        <div class="card-title">Clean CLI</div>
-        <div class="card-desc">English commands, German output. Intuitive interface for secure vault management and agent control.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🛡️</div>
-        <div class="card-title">Memory Safety</div>
-        <div class="card-desc">Explicit secure buffer zeroing after every cryptographic operation. No sensitive data left in heap memory.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">📦</div>
-        <div class="card-title">Zero Dependencies</div>
-        <div class="card-desc">Single standalone binary. No runtime required. Deploy anywhere with a single file copy.</div>
-      </div>
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <div class="card-title">Local AI Agent</div>
+      <div class="card-desc">Connects to local LLM backends via Unix socket. Full context window management with 4096 token support.</div>
     </div>
-  </section>
-
-  <section class="security">
-    <div class="security-inner">
-      <h2 class="section-title">Security Architecture</h2>
-      <div class="security-grid">
-        <div class="sec-item">
-          <div class="sec-label">Encryption</div>
-          <div class="sec-value">AES-256-GCM</div>
-        </div>
-        <div class="sec-item">
-          <div class="sec-label">Key Derivation</div>
-          <div class="sec-value">PBKDF2-HMAC-SHA512</div>
-        </div>
-        <div class="sec-item">
-          <div class="sec-label">Iterations</div>
-          <div class="sec-value">600,000</div>
-        </div>
-        <div class="sec-item">
-          <div class="sec-label">Salt Size</div>
-          <div class="sec-value">256-bit Random</div>
-        </div>
-        <div class="sec-item">
-          <div class="sec-label">IV/Nonce</div>
-          <div class="sec-value">96-bit per lock()</div>
-        </div>
-        <div class="sec-item">
-          <div class="sec-label">Auth Tag</div>
-          <div class="sec-value">128-bit GCM</div>
-        </div>
-        <div class="sec-item">
-          <div class="sec-label">Standard</div>
-          <div class="sec-value">NIST SP 800-38D</div>
-        </div>
-        <div class="sec-item">
-          <div class="sec-label">Compliance</div>
-          <div class="sec-value">FIPS 140-3</div>
-        </div>
-      </div>
+    <div class="card">
+      <div class="card-icon">🖥️</div>
+      <div class="card-title">Clean CLI</div>
+      <div class="card-desc">English commands, German output. Intuitive interface for secure vault management and agent control.</div>
     </div>
-  </section>
-
-  <section class="code-section">
-    <h2 class="section-title">Quick Start</h2>
-    <div class="code-block">
-      <div class="terminal-bar">
-        <div class="dot dot-red"></div>
-        <div class="dot dot-yellow"></div>
-        <div class="dot dot-green"></div>
-      </div>
-      <div><span class="comment"># Initialize encrypted vault</span></div>
-      <div><span class="cmd">$</span> <span class="string">auracore init</span></div>
-      <br>
-      <div><span class="comment"># Start AI agent session</span></div>
-      <div><span class="cmd">$</span> <span class="string">auracore start</span></div>
-      <br>
-      <div><span class="comment"># Check encryption status</span></div>
-      <div><span class="cmd">$</span> <span class="string">auracore encrypt-status</span></div>
-      <br>
-      <div><span class="comment"># Store a secret securely</span></div>
-      <div><span class="cmd">$</span> <span class="string">auracore store api_token</span></div>
+    <div class="card">
+      <div class="card-icon">💾</div>
+      <div class="card-title">Secure Backup <span class="new-badge">NEW</span></div>
+      <div class="card-desc">Encrypted vault backups with automatic rotation. Maximum 5 backups kept. Integrity verification before restore.</div>
     </div>
-  </section>
+    <div class="card">
+      <div class="card-icon">🛡️</div>
+      <div class="card-title">Memory Safety</div>
+      <div class="card-desc">Explicit secure buffer zeroing after every cryptographic operation. No sensitive data left in heap memory.</div>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    <p>Built with Mojo by
-      <a href="https://github.com/lamin-16">lamin-16</a>
-      &nbsp;·&nbsp;
-      <a href="https://github.com/lamin-16/auracore">GitHub</a>
-      &nbsp;·&nbsp;
-      AuraCore v0.1.0-alpha
-    </p>
-  </footer>
+<section class="security-bg">
+  <h2 class="section-title">Security Architecture</h2>
+  <div class="sec-grid">
+    <div class="sec-item"><div class="sec-label">Encryption</div><div class="sec-value">AES-256-GCM</div></div>
+    <div class="sec-item"><div class="sec-label">Key Derivation</div><div class="sec-value">PBKDF2-HMAC-SHA512</div></div>
+    <div class="sec-item"><div class="sec-label">Iterations</div><div class="sec-value">600,000</div></div>
+    <div class="sec-item"><div class="sec-label">Salt Size</div><div class="sec-value">256-bit Random</div></div>
+    <div class="sec-item"><div class="sec-label">IV/Nonce</div><div class="sec-value">96-bit per lock()</div></div>
+    <div class="sec-item"><div class="sec-label">Auth Tag</div><div class="sec-value">128-bit GCM</div></div>
+    <div class="sec-item"><div class="sec-label">Standard</div><div class="sec-value">NIST SP 800-38D</div></div>
+    <div class="sec-item"><div class="sec-label">Compliance</div><div class="sec-value">FIPS 140-3</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section-title">Quick Start</h2>
+  <div class="code-block">
+    <div class="dot-row">
+      <div class="dot" style="background:#ff5f57"></div>
+      <div class="dot" style="background:#febc2e"></div>
+      <div class="dot" style="background:#28c840"></div>
+    </div>
+    <div><span class="comment"># Initialize encrypted vault</span></div>
+    <div><span class="cmd">$</span> <span class="string">auracore init</span></div><br>
+    <div><span class="comment"># Start AI agent session</span></div>
+    <div><span class="cmd">$</span> <span class="string">auracore start</span></div><br>
+    <div><span class="comment"># Create encrypted backup</span></div>
+    <div><span class="cmd">$</span> <span class="string">auracore backup create</span></div><br>
+    <div><span class="comment"># List all backups</span></div>
+    <div><span class="cmd">$</span> <span class="string">auracore backup list</span></div><br>
+    <div><span class="comment"># Restore from backup</span></div>
+    <div><span class="cmd">$</span> <span class="string">auracore backup restore vault_backup_20260922.enc</span></div><br>
+    <div><span class="comment"># Check encryption status</span></div>
+    <div><span class="cmd">$</span> <span class="string">auracore encrypt-status</span></div>
+  </div>
+  <div style="text-align:center;margin-top:1.5rem">
+    <div class="version-tag">v0.2.0-alpha · Backup Manager Added</div>
+  </div>
+</section>
+
+<footer>
+  <p>Built with Mojo by <a href="https://github.com/lamin-16">lamin-16</a> &nbsp;·&nbsp; <a href="https://github.com/lamin-16/auracore">GitHub</a> &nbsp;·&nbsp; AuraCore v0.2.0-alpha</p>
+</footer>
 
 </body>
 </html>
