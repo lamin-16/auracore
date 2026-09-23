@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraCore Docs</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a0f;color:#e2e8f0;line-height:1.7}
+    nav{background:rgba(0,0,0,.8);border-bottom:1px solid rgba(255,255,255,.08);padding:1rem 2rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:100}
+    .nav-logo{font-weight:900;font-size:1.2rem;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    nav a{color:#64748b;text-decoration:none;font-size:.9rem}
+    nav a:hover{color:#e2e8f0}
+    .container{max-width:900px;margin:0 auto;padding:3rem 2rem}
+    h1{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
+    h2{font-size:1.5rem;font-weight:700;color:#818cf8;margin:3rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(129,140,248,.2)}
+    h3{font-size:1.1rem;font-weight:600;color:#c084fc;margin:2rem 0 .5rem}
+    p{color:#94a3b8;margin-bottom:1rem}
+    .cmd-table{width:100%;border-collapse:collapse;margin:1rem 0}
+    .cmd-table th{text-align:left;color:#818cf8;font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.08)}
+    .cmd-table td{padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);color:#94a3b8;font-size:.9rem}
+    .cmd-table td:first-child{font-family:'Courier New',monospace;color:#79c0ff}
+    .cmd-table tr:hover td{background:rgba(255,255,255,.02)}
+    code{background:#0d1117;border:1px solid rgba(255,255,255,.1);border-radius:.3rem;padding:.2rem .5rem;font-family:'Courier New',monospace;font-size:.85rem;color:#a5d6ff}
+    .code-block{background:#0d1117;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.25rem;font-family:'Courier New',monospace;font-size:.85rem;overflow-x:auto;margin:1rem 0;color:#a5d6ff}
+    .code-block .comment{color:#6e7681}
+    .badge{display:inline-block;background:rgba(79,70,229,.2);border:1px solid rgba(79,70,229,.4);color:#818cf8;padding:.2rem .6rem;border-radius:9999px;font-size:.75rem;margin-left:.5rem}
+    .new{background:rgba(34,197,94,.2);border-color:rgba(34,197,94,.4);color:#4ade80}
+    .security-box{background:rgba(79,70,229,.05);border:1px solid rgba(79,70,229,.3);border-radius:.75rem;padding:1.5rem;margin:1rem 0}
+    .security-box h4{color:#818cf8;margin-bottom:.75rem;font-size:.9rem;text-transform:uppercase;letter-spacing:.05em}
+    .sec-row{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.9rem}
+    .sec-row:last-child{border-bottom:none}
+    .sec-key{color:#64748b}
+    .sec-val{color:#e2e8f0;font-weight:600}
+    footer{text-align:center;padding:3rem 2rem;color:#334155;border-top:1px solid rgba(255,255,255,.05);margin-top:4rem}
+    footer a{color:#818cf8;text-decoration:none}
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">AuraCore</span>
+  <a href="index.html">Home</a>
+  <a href="docs.html" style="color:#e2e8f0">Docs</a>
+  <a href="https://github.com/lamin-16/auracore">GitHub</a>
+</nav>
+
+<div class="container">
+  <h1>Documentation</h1>
+  <p>AuraCore v0.4.0 — Complete CLI reference and security guide.</p>
+
+  <h2>Installation</h2>
+  <div class="code-block">
+<span class="comment"># Clone repository</span>
+git clone https://github.com/lamin-16/auracore.git
+cd auracore
+
+<span class="comment"># Build with Mojo</span>
+mkdir -p build
+mojo build src/cli_interface.mojo -o build/auracore
+
+<span class="comment"># Add to PATH</span>
+cp build/auracore ~/bin/auracore
+  </div>
+
+  <h2>Core Commands</h2>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>auracore init</td><td>Initialize new encrypted vault</td></tr>
+    <tr><td>auracore start</td><td>Start interactive AI agent session</td></tr>
+    <tr><td>auracore stop</td><td>Gracefully stop agent and lock vault</td></tr>
+    <tr><td>auracore status</td><td>Show agent runtime status</td></tr>
+    <tr><td>auracore encrypt-status</td><td>Show encryption diagnostics</td></tr>
+    <tr><td>auracore version</td><td>Print version information</td></tr>
+    <tr><td>auracore help</td><td>Print help text</td></tr>
+  </table>
+
+  <h2>Secret Management</h2>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>auracore store &lt;key&gt;</td><td>Store a secret in the encrypted vault</td></tr>
+    <tr><td>auracore retrieve &lt;key&gt;</td><td>Retrieve a secret from the vault</td></tr>
+  </table>
+
+  <h2>Backup Manager <span class="badge">v0.2.0</span></h2>
+  <p>Encrypted vault backups with automatic rotation. Maximum 5 backups stored.</p>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>auracore backup create</td><td>Create new encrypted backup</td></tr>
+    <tr><td>auracore backup list</td><td>List all available backups</td></tr>
+    <tr><td>auracore backup restore &lt;file&gt;</td><td>Restore vault from backup</td></tr>
+    <tr><td>auracore backup verify &lt;file&gt;</td><td>Verify backup integrity</td></tr>
+    <tr><td>auracore backup delete &lt;file&gt;</td><td>Delete a backup file</td></tr>
+  </table>
+
+  <h2>Export Manager <span class="badge">v0.3.0</span></h2>
+  <p>Portable encrypted secret bundles with time-limited TTL (24 hours default).</p>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>auracore export create</td><td>Export secrets to encrypted bundle</td></tr>
+    <tr><td>auracore export list</td><td>List all export files</td></tr>
+    <tr><td>auracore export import &lt;file&gt;</td><td>Import secrets from bundle</td></tr>
+    <tr><td>auracore export revoke &lt;file&gt;</td><td>Delete export before TTL expiry</td></tr>
+  </table>
+
+  <h3>Export Formats</h3>
+  <table class="cmd-table">
+    <tr><th>Format</th><th>Extension</th><th>Use Case</th></tr>
+    <tr><td>auraexp</td><td>.auraexp</td><td>AuraCore-to-AuraCore transfer</td></tr>
+    <tr><td>json.enc</td><td>.json.enc</td><td>Encrypted JSON for scripts</td></tr>
+    <tr><td>env.enc</td><td>.env.enc</td><td>Encrypted .env file</td></tr>
+  </table>
+
+  <h2>Agent Config <span class="badge new">v0.4.0</span></h2>
+  <p>Tune every aspect of the AI agent. Config stored encrypted at <code>~/.auracore/agent.cfg.enc</code>.</p>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>auracore agent-config show</td><td>Display current configuration</td></tr>
+    <tr><td>auracore agent-config set &lt;key&gt; &lt;val&gt;</td><td>Set a config value</td></tr>
+    <tr><td>auracore agent-config reset</td><td>Reset to defaults</td></tr>
+    <tr><td>auracore agent-config keys</td><td>List all available keys</td></tr>
+  </table>
+
+  <h3>Configuration Keys</h3>
+  <table class="cmd-table">
+    <tr><th>Key</th><th>Default</th><th>Description</th></tr>
+    <tr><td>model</td><td>tinyllama</td><td>LLM model name</td></tr>
+    <tr><td>ctx_size</td><td>4096</td><td>Context window tokens</td></tr>
+    <tr><td>max_tokens</td><td>512</td><td>Max output tokens</td></tr>
+    <tr><td>temperature</td><td>0.7</td><td>Creativity 0.0-2.0</td></tr>
+    <tr><td>top_p</td><td>0.9</td><td>Top-P sampling</td></tr>
+    <tr><td>threads</td><td>4</td><td>CPU threads</td></tr>
+    <tr><td>backend</td><td>socket</td><td>socket | http | ffi</td></tr>
+    <tr><td>host</td><td>127.0.0.1</td><td>LLM host</td></tr>
+    <tr><td>port</td><td>8080</td><td>LLM port</td></tr>
+    <tr><td>language</td><td>de</td><td>Output language: de | en</td></tr>
+    <tr><td>persona</td><td>Aura</td><td>Agent display name</td></tr>
+    <tr><td>memory_turns</td><td>20</td><td>Max conversation turns</td></tr>
+    <tr><td>persist_memory</td><td>true</td><td>Save memory to vault</td></tr>
+  </table>
+
+  <h2>Security Architecture</h2>
+  <div class="security-box">
+    <h4>Cryptographic Standards</h4>
+    <div class="sec-row"><span class="sec-key">Encryption</span><span class="sec-val">AES-256-GCM</span></div>
+    <div class="sec-row"><span class="sec-key">Key Derivation</span><span class="sec-val">PBKDF2-HMAC-SHA512</span></div>
+    <div class="sec-row"><span class="sec-key">Iterations</span><span class="sec-val">600,000</span></div>
+    <div class="sec-row"><span class="sec-key">Salt</span><span class="sec-val">256-bit random per vault</span></div>
+    <div class="sec-row"><span class="sec-key">IV/Nonce</span><span class="sec-val">96-bit random per lock()</span></div>
+    <div class="sec-row"><span class="sec-key">Auth Tag</span><span class="sec-val">128-bit GCM</span></div>
+    <div class="sec-row"><span class="sec-key">Standard</span><span class="sec-val">NIST SP 800-38D</span></div>
+    <div class="sec-row"><span class="sec-key">Compliance</span><span class="sec-val">FIPS 140-3</span></div>
+  </div>
+
+  <h2>Vault File Layout</h2>
+  <div class="code-block">
+Bytes   Field       Size    Description
+------  ----------  ------  ---------------------------
+0..3    Magic       4       "AURC" identifier
+4       Version     1       Format version (0x01)
+5       KDF Type    1       0x01=PBKDF2  0x02=Argon2id
+6..37   Salt        32      Random 256-bit salt
+38..49  IV/Nonce    12      Random 96-bit GCM nonce
+50..65  Auth Tag    16      128-bit GCM tag
+66..    Ciphertext  var     AES-256-GCM encrypted payload
+  </div>
+
+  <h2>CLI Flags</h2>
+  <table class="cmd-table">
+    <tr><th>Flag</th><th>Description</th></tr>
+    <tr><td>--vault-path &lt;path&gt;</td><td>Override default vault path</td></tr>
+    <tr><td>--agent-id &lt;id&gt;</td><td>Override agent ID</td></tr>
+    <tr><td>--debug</td><td>Enable verbose debug logging</td></tr>
+    <tr><td>--no-color</td><td>Disable ANSI color output</td></tr>
+  </table>
+
+</div>
+
+<footer>
+  <p>AuraCore v0.4.0 · Built with Mojo by
+    <a href="https://github.com/lamin-16">lamin-16</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/lamin-16/auracore">GitHub</a>
+  </p>
+</footer>
+
+</body>
+</html>

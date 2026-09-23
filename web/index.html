@@ -7,6 +7,10 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a0f;color:#e2e8f0;overflow-x:hidden}
+    nav{background:rgba(0,0,0,.8);border-bottom:1px solid rgba(255,255,255,.08);padding:1rem 2rem;display:flex;align-items:center;gap:1.5rem;position:sticky;top:0;z-index:100}
+    .nav-logo{font-weight:900;font-size:1.2rem;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    nav a{color:#64748b;text-decoration:none;font-size:.9rem;transition:color .2s}
+    nav a:hover{color:#e2e8f0}
     .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;background:radial-gradient(ellipse at top,#1a1a3e 0%,#0a0a0f 70%)}
     .badge{display:inline-block;background:rgba(79,70,229,.2);border:1px solid rgba(79,70,229,.5);color:#818cf8;padding:.4rem 1rem;border-radius:9999px;font-size:.85rem;margin-bottom:1.5rem}
     .logo{font-size:4rem;font-weight:900;background:linear-gradient(135deg,#818cf8 0%,#c084fc 50%,#38bdf8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
@@ -15,8 +19,10 @@
     .stat-number{font-size:2rem;font-weight:700;color:#818cf8}
     .stat-label{font-size:.8rem;color:#64748b;text-transform:uppercase;letter-spacing:.1em}
     .buttons{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
-    .btn-primary{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;padding:.8rem 2rem;border-radius:.5rem;text-decoration:none;font-weight:600;box-shadow:0 4px 15px rgba(79,70,229,.4)}
-    .btn-secondary{background:rgba(255,255,255,.05);color:#e2e8f0;padding:.8rem 2rem;border-radius:.5rem;text-decoration:none;font-weight:600;border:1px solid rgba(255,255,255,.1)}
+    .btn-primary{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;padding:.8rem 2rem;border-radius:.5rem;text-decoration:none;font-weight:600;box-shadow:0 4px 15px rgba(79,70,229,.4);transition:transform .2s}
+    .btn-primary:hover{transform:translateY(-2px)}
+    .btn-secondary{background:rgba(255,255,255,.05);color:#e2e8f0;padding:.8rem 2rem;border-radius:.5rem;text-decoration:none;font-weight:600;border:1px solid rgba(255,255,255,.1);transition:background .2s}
+    .btn-secondary:hover{background:rgba(255,255,255,.1)}
     .section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
     .section-title{text-align:center;font-size:2rem;font-weight:700;margin-bottom:3rem;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
@@ -25,38 +31,48 @@
     .card-icon{font-size:2.5rem;margin-bottom:1rem}
     .card-title{font-size:1.1rem;font-weight:700;color:#e2e8f0;margin-bottom:.5rem}
     .card-desc{color:#64748b;font-size:.9rem;line-height:1.6}
+    .new-badge{display:inline-block;background:rgba(34,197,94,.2);border:1px solid rgba(34,197,94,.5);color:#4ade80;padding:.15rem .5rem;border-radius:9999px;font-size:.7rem;margin-left:.4rem}
     .security-bg{background:rgba(79,70,229,.05);border-top:1px solid rgba(79,70,229,.2);border-bottom:1px solid rgba(79,70,229,.2);padding:5rem 2rem}
-    .sec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:2rem;max-width:900px;margin-left:auto;margin-right:auto}
+    .sec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;max-width:900px;margin:2rem auto 0}
     .sec-item{background:rgba(0,0,0,.3);border:1px solid rgba(79,70,229,.3);border-radius:.75rem;padding:1.25rem}
     .sec-label{font-size:.75rem;color:#818cf8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem}
     .sec-value{font-size:.95rem;color:#e2e8f0;font-weight:600}
-    .code-block{background:#0d1117;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.5rem;font-family:'Courier New',monospace;font-size:.85rem;overflow-x:auto}
-    .comment{color:#6e7681}
-    .cmd{color:#79c0ff}
-    .string{color:#a5d6ff}
+    .code-block{background:#0d1117;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1.5rem;font-family:'Courier New',monospace;font-size:.85rem;overflow-x:auto;margin:1rem 0}
+    .comment{color:#6e7681}.cmd{color:#79c0ff}.string{color:#a5d6ff}
     .dot-row{display:flex;gap:.4rem;margin-bottom:1rem}
     .dot{width:12px;height:12px;border-radius:50%}
-    .new-badge{display:inline-block;background:rgba(34,197,94,.2);border:1px solid rgba(34,197,94,.5);color:#4ade80;padding:.2rem .6rem;border-radius:9999px;font-size:.7rem;margin-left:.5rem;vertical-align:middle}
+    .changelog{max-width:700px;margin:0 auto}
+    .cl-item{border-left:2px solid rgba(129,140,248,.4);padding:.75rem 0 .75rem 1.5rem;margin-bottom:.5rem;position:relative}
+    .cl-item::before{content:'';position:absolute;left:-5px;top:1.2rem;width:8px;height:8px;border-radius:50%;background:#818cf8}
+    .cl-version{font-size:.8rem;color:#818cf8;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+    .cl-desc{color:#94a3b8;font-size:.9rem;margin-top:.2rem}
+    .version-tag{display:inline-block;background:rgba(129,140,248,.1);border:1px solid rgba(129,140,248,.3);color:#818cf8;padding:.2rem .8rem;border-radius:9999px;font-size:.8rem;margin-top:1.5rem}
     footer{text-align:center;padding:3rem 2rem;color:#334155;border-top:1px solid rgba(255,255,255,.05)}
     footer a{color:#818cf8;text-decoration:none}
-    .version-tag{display:inline-block;background:rgba(129,140,248,.1);border:1px solid rgba(129,140,248,.3);color:#818cf8;padding:.2rem .8rem;border-radius:9999px;font-size:.8rem;margin-top:1rem}
   </style>
 </head>
 <body>
 
+<nav>
+  <span class="nav-logo">AuraCore</span>
+  <a href="index.html" style="color:#e2e8f0">Home</a>
+  <a href="docs.html">Docs</a>
+  <a href="https://github.com/lamin-16/auracore">GitHub</a>
+</nav>
+
 <section class="hero">
-  <div class="badge">v0.2.0 — Quartz</div>
+  <div class="badge">v0.4.0 — Quartz</div>
   <div class="logo">AuraCore</div>
   <p class="tagline">Ultraschnell · Lokal · Verschluesselt · Zero-Dependency</p>
   <div class="stats">
-    <div class="stat"><div class="stat-number">1,629+</div><div class="stat-label">Lines of Mojo</div></div>
+    <div class="stat"><div class="stat-number">2,400+</div><div class="stat-label">Lines of Mojo</div></div>
     <div class="stat"><div class="stat-number">AES-256</div><div class="stat-label">Encryption</div></div>
     <div class="stat"><div class="stat-number">600K</div><div class="stat-label">KDF Iterations</div></div>
     <div class="stat"><div class="stat-number">0</div><div class="stat-label">Dependencies</div></div>
   </div>
   <div class="buttons">
     <a href="https://github.com/lamin-16/auracore" class="btn-primary">View on GitHub</a>
-    <a href="#features" class="btn-secondary">Learn More</a>
+    <a href="docs.html" class="btn-secondary">Documentation</a>
   </div>
 </section>
 
@@ -79,19 +95,19 @@
       <div class="card-desc">Connects to local LLM backends via Unix socket. Full context window management with 4096 token support.</div>
     </div>
     <div class="card">
-      <div class="card-icon">🖥️</div>
-      <div class="card-title">Clean CLI</div>
-      <div class="card-desc">English commands, German output. Intuitive interface for secure vault management and agent control.</div>
-    </div>
-    <div class="card">
       <div class="card-icon">💾</div>
-      <div class="card-title">Secure Backup <span class="new-badge">NEW</span></div>
-      <div class="card-desc">Encrypted vault backups with automatic rotation. Maximum 5 backups kept. Integrity verification before restore.</div>
+      <div class="card-title">Secure Backup <span class="new-badge">v0.2</span></div>
+      <div class="card-desc">Encrypted vault backups with automatic rotation. Max 5 backups. Integrity verification before restore.</div>
     </div>
     <div class="card">
-      <div class="card-icon">🛡️</div>
-      <div class="card-title">Memory Safety</div>
-      <div class="card-desc">Explicit secure buffer zeroing after every cryptographic operation. No sensitive data left in heap memory.</div>
+      <div class="card-icon">📤</div>
+      <div class="card-title">Export Manager <span class="new-badge">v0.3</span></div>
+      <div class="card-desc">Portable encrypted secret bundles with 24h TTL. Three formats: .auraexp, .json.enc, .env.enc.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚙️</div>
+      <div class="card-title">Agent Config <span class="new-badge">v0.4</span></div>
+      <div class="card-desc">Full agent tuning: model, temperature, threads, backend, persona, memory. Encrypted config persistence.</div>
     </div>
   </div>
 </section>
@@ -120,24 +136,46 @@
     </div>
     <div><span class="comment"># Initialize encrypted vault</span></div>
     <div><span class="cmd">$</span> <span class="string">auracore init</span></div><br>
-    <div><span class="comment"># Start AI agent session</span></div>
+    <div><span class="comment"># Configure AI agent</span></div>
+    <div><span class="cmd">$</span> <span class="string">auracore agent-config set temperature 0.8</span></div><br>
+    <div><span class="comment"># Start agent session</span></div>
     <div><span class="cmd">$</span> <span class="string">auracore start</span></div><br>
     <div><span class="comment"># Create encrypted backup</span></div>
     <div><span class="cmd">$</span> <span class="string">auracore backup create</span></div><br>
-    <div><span class="comment"># List all backups</span></div>
-    <div><span class="cmd">$</span> <span class="string">auracore backup list</span></div><br>
-    <div><span class="comment"># Restore from backup</span></div>
-    <div><span class="cmd">$</span> <span class="string">auracore backup restore vault_backup_20260922.enc</span></div><br>
+    <div><span class="comment"># Export secrets securely</span></div>
+    <div><span class="cmd">$</span> <span class="string">auracore export create</span></div><br>
     <div><span class="comment"># Check encryption status</span></div>
     <div><span class="cmd">$</span> <span class="string">auracore encrypt-status</span></div>
   </div>
-  <div style="text-align:center;margin-top:1.5rem">
-    <div class="version-tag">v0.2.0-alpha · Backup Manager Added</div>
+  <div style="text-align:center">
+    <a href="docs.html" class="btn-primary" style="display:inline-block;margin-top:1.5rem">Full Documentation</a>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section-title">Changelog</h2>
+  <div class="changelog">
+    <div class="cl-item">
+      <div class="cl-version">v0.4.0 — 2026-09-23</div>
+      <div class="cl-desc">Agent Config system — full LLM tuning with encrypted persistence</div>
+    </div>
+    <div class="cl-item">
+      <div class="cl-version">v0.3.0 — 2026-09-23</div>
+      <div class="cl-desc">Export Manager — portable encrypted bundles with 24h TTL</div>
+    </div>
+    <div class="cl-item">
+      <div class="cl-version">v0.2.0 — 2026-09-22</div>
+      <div class="cl-desc">Backup Manager — encrypted backups with auto-rotation</div>
+    </div>
+    <div class="cl-item">
+      <div class="cl-version">v0.1.0 — 2026-09-22</div>
+      <div class="cl-desc">Initial release — AES-256-GCM vault, AI agent core, CLI</div>
+    </div>
   </div>
 </section>
 
 <footer>
-  <p>Built with Mojo by <a href="https://github.com/lamin-16">lamin-16</a> &nbsp;·&nbsp; <a href="https://github.com/lamin-16/auracore">GitHub</a> &nbsp;·&nbsp; AuraCore v0.2.0-alpha</p>
+  <p>Built with Mojo by <a href="https://github.com/lamin-16">lamin-16</a> &nbsp;·&nbsp; <a href="https://github.com/lamin-16/auracore">GitHub</a> &nbsp;·&nbsp; <a href="web/docs.html">Docs</a> &nbsp;·&nbsp; AuraCore v0.4.0</p>
 </footer>
 
 </body>
