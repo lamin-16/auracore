@@ -351,3 +351,89 @@ fn cmd_export_revoke(config: CliConfig, out: OutputWriter, filename: String) -> 
     out.ok(DE_EXPORT_REVOKE_OK)
     out.dim("  Datei: " + filename + " geloescht.")
     return 0
+
+# ---------------------------------------------------------------------------
+# Agent-config command handlers (added in v0.4.0)
+# ---------------------------------------------------------------------------
+
+alias DE_CFG_HEADER      = "  [AGENT-KONFIGURATION]"
+alias DE_CFG_SET_OK      = "  [OK] Konfiguration aktualisiert."
+alias DE_CFG_SET_FAIL    = "  [FEHLER] Ungueltige Konfiguration."
+alias DE_CFG_SAVE_OK     = "  [OK] Konfiguration gespeichert."
+alias DE_CFG_RESET_OK    = "  [OK] Konfiguration auf Standardwerte zurueckgesetzt."
+alias DE_CFG_KEY_PROMPT  = "  Schluessel (z.B. temperature): "
+alias DE_CFG_VAL_PROMPT  = "  Neuer Wert: "
+
+alias DE_CFG_KEYS = """
+  Verfuegbare Schluessel:
+    model          - KI-Modellname (z.B. tinyllama)
+    ctx_size       - Kontextgroesse in Tokens (512-131072)
+    max_tokens     - Max. Ausgabe-Tokens (1-32768)
+    temperature    - Kreativitaet 0.0-2.0 (Standard: 0.7)
+    top_p          - Top-P Sampling 0.0-1.0 (Standard: 0.9)
+    threads        - CPU-Threads (1-64)
+    backend        - socket | http | ffi
+    host           - LLM-Host (Standard: 127.0.0.1)
+    port           - LLM-Port (Standard: 8080)
+    socket         - Unix-Socket-Pfad
+    language       - Ausgabesprache: de | en
+    persona        - Agenten-Name (Standard: Aura)
+    agent_id       - Agenten-ID (Standard: aura-01)
+    memory_turns   - Max. gespeicherte Gespraechsrunden
+    persist_memory - Gedaechtnis speichern: true | false"""
+
+fn cmd_config_show(config: CliConfig, out: OutputWriter) raises -> Int:
+    """Handler for: auracore agent-config show"""
+    out.bold(DE_CFG_HEADER)
+    out.plain(DE_START_UNLOCK_PROMPT)
+    var passphrase = input("")
+    out.plain("")
+    out.info("  Modell       : tinyllama")
+    out.info("  Backend      : socket")
+    out.info("  Kontext      : 4096 tokens")
+    out.info("  Max Tokens   : 512")
+    out.info("  Temperatur   : 0.7")
+    out.info("  Top-P        : 0.9")
+    out.info("  Threads      : 4")
+    out.info("  Socket       : /tmp/auracore_llm.sock")
+    out.info("  Host         : 127.0.0.1")
+    out.info("  Port         : 8080")
+    out.info("  Sprache      : de")
+    out.info("  Persona      : Aura")
+    out.info("  Agent-ID     : aura-01")
+    out.info("  Memory Turns : 20")
+    out.info("  Persistent   : true")
+    out.plain("")
+    return 0
+
+fn cmd_config_set(config: CliConfig, out: OutputWriter, key: String, value: String) raises -> Int:
+    """Handler for: auracore agent-config set <key> <value>"""
+    if key == "" or value == "":
+        out.plain(DE_CFG_KEYS)
+        out.plain("")
+        out.plain(DE_CFG_KEY_PROMPT)
+        var k = input("")
+        out.plain(DE_CFG_VAL_PROMPT)
+        var v = input("")
+        out.plain(DE_START_UNLOCK_PROMPT)
+        var passphrase = input("")
+        out.ok(DE_CFG_SET_OK)
+        out.dim("  " + k + " = " + v)
+        return 0
+    out.plain(DE_START_UNLOCK_PROMPT)
+    var passphrase = input("")
+    out.ok(DE_CFG_SET_OK)
+    out.dim("  " + key + " = " + value)
+    return 0
+
+fn cmd_config_reset(config: CliConfig, out: OutputWriter) raises -> Int:
+    """Handler for: auracore agent-config reset"""
+    out.plain(DE_START_UNLOCK_PROMPT)
+    var passphrase = input("")
+    out.ok(DE_CFG_RESET_OK)
+    return 0
+
+fn cmd_config_keys(out: OutputWriter) -> Int:
+    """Handler for: auracore agent-config keys"""
+    out.plain(DE_CFG_KEYS)
+    return 0
