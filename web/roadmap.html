@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraCore Roadmap</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a0f;color:#e2e8f0}
+    nav{background:rgba(0,0,0,.8);border-bottom:1px solid rgba(255,255,255,.08);padding:1rem 2rem;display:flex;align-items:center;gap:1.5rem;position:sticky;top:0;z-index:100}
+    .nav-logo{font-weight:900;font-size:1.2rem;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    nav a{color:#64748b;text-decoration:none;font-size:.9rem}
+    nav a:hover{color:#e2e8f0}
+    .container{max-width:800px;margin:0 auto;padding:4rem 2rem}
+    h1{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
+    .subtitle{color:#64748b;margin-bottom:4rem}
+    .phase{margin-bottom:3rem}
+    .phase-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+    .phase-dot{width:16px;height:16px;border-radius:50%;flex-shrink:0}
+    .done{background:#4ade80}
+    .progress{background:#818cf8}
+    .planned{background:#334155}
+    .phase-title{font-size:1.2rem;font-weight:700;color:#e2e8f0}
+    .phase-version{font-size:.8rem;color:#64748b;margin-left:.5rem}
+    .items{border-left:2px solid rgba(255,255,255,.08);margin-left:7px;padding-left:2rem}
+    .item{padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:.75rem}
+    .item:last-child{border-bottom:none}
+    .check{font-size:1rem}
+    .item-text{color:#94a3b8;font-size:.9rem}
+    .item-text.done-text{color:#e2e8f0}
+    .tag{display:inline-block;padding:.15rem .5rem;border-radius:9999px;font-size:.7rem;margin-left:.5rem}
+    .tag-security{background:rgba(239,68,68,.2);color:#f87171}
+    .tag-perf{background:rgba(234,179,8,.2);color:#fbbf24}
+    .tag-ux{background:rgba(129,140,248,.2);color:#818cf8}
+    footer{text-align:center;padding:3rem 2rem;color:#334155;border-top:1px solid rgba(255,255,255,.05);margin-top:4rem}
+    footer a{color:#818cf8;text-decoration:none}
+  </style>
+</head>
+<body>
+<nav>
+  <span class="nav-logo">AuraCore</span>
+  <a href="index.html">Home</a>
+  <a href="docs.html">Docs</a>
+  <a href="roadmap.html" style="color:#e2e8f0">Roadmap</a>
+  <a href="https://github.com/lamin-16/auracore">GitHub</a>
+</nav>
+<div class="container">
+  <h1>Roadmap</h1>
+  <p class="subtitle">AuraCore development plan — from alpha to production.</p>
+
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-dot done"></div>
+      <div class="phase-title">Phase 1 — Foundation <span class="phase-version">v0.1.0 done</span></div>
+    </div>
+    <div class="items">
+      <div class="item"><span class="check">✅</span><span class="item-text done-text">AES-256-GCM vault encryption</span></div>
+      <div class="item"><span class="check">✅</span><span class="item-text done-text">PBKDF2-HMAC-SHA512 key derivation</span></div>
+      <div class="item"><span class="check">✅</span><span class="item-text done-text">AI agent execution engine</span></div>
+      <div class="item"><span class="check">✅</span><span class="item-text done-text">CLI with German output</span></div>
+      <div class="item"><span class="check">✅</span><span class="item-text done-text">GitHub + Vercel deployment</span></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-dot done"></div>
+      <div class="phase-title">Phase 2 — Security <span class="phase-version">v0.2.0 - v0.4.0 done</span></div>
+    </div>
+    <div class="items">
+      <div class="item"><span class="check">✅</span><span class="item-text done-text">Encrypted backup manager</span></div>
+      <div class="item"><span class="check">✅</span><span class="item-text done-text">Secure export/import engine</span></div>
+      <div class="item"><span class="check">✅</span><span class="item-text done-text">Agent configuration system</span></div>
+      <div class="item"><span class="check">✅</span><span class="item-text done-text">Audit logger</span><span class="tag tag-security">security</span></div>
+      <div class="item"><span class="check">✅</span><span class="item-text done-text">Auto-lock timer</span><span class="tag tag-security">security</span></div>
+      <div class="item"><span class="check">✅</span><span class="item-text done-text">Memory and prompt template manager</span></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-dot progress"></div>
+      <div class="phase-title">Phase 3 — Crypto Upgrade <span class="phase-version">v0.5.0 planned</span></div>
+    </div>
+    <div class="items">
+      <div class="item"><span class="check">🔲</span><span class="item-text">Argon2id KDF implementation</span><span class="tag tag-security">security</span></div>
+      <div class="item"><span class="check">🔲</span><span class="item-text">libcrypto FFI full integration</span><span class="tag tag-security">security</span></div>
+      <div class="item"><span class="check">🔲</span><span class="item-text">Terminal passphrase masking</span><span class="tag tag-ux">ux</span></div>
+      <div class="item"><span class="check">🔲</span><span class="item-text">Vault integrity self-check</span><span class="tag tag-security">security</span></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-dot planned"></div>
+      <div class="phase-title">Phase 4 — Performance <span class="phase-version">v0.6.0 planned</span></div>
+    </div>
+    <div class="items">
+      <div class="item"><span class="check">🔲</span><span class="item-text">SIMD-accelerated AES operations</span><span class="tag tag-perf">perf</span></div>
+      <div class="item"><span class="check">🔲</span><span class="item-text">Async token streaming</span><span class="tag tag-perf">perf</span></div>
+      <div class="item"><span class="check">🔲</span><span class="item-text">Multi-agent support</span></div>
+      <div class="item"><span class="check">🔲</span><span class="item-text">ARM64 NEON crypto acceleration</span><span class="tag tag-perf">perf</span></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-dot planned"></div>
+      <div class="phase-title">Phase 5 — Production <span class="phase-version">v1.0.0 planned</span></div>
+    </div>
+    <div class="items">
+      <div class="item"><span class="check">🔲</span><span class="item-text">Full test suite</span></div>
+      <div class="item"><span class="check">🔲</span><span class="item-text">Binary releases on GitHub</span></div>
+      <div class="item"><span class="check">🔲</span><span class="item-text">FIPS 140-3 validation</span><span class="tag tag-security">security</span></div>
+      <div class="item"><span class="check">🔲</span><span class="item-text">Plugin system for LLM backends</span></div>
+      <div class="item"><span class="check">🔲</span><span class="item-text">Web dashboard</span><span class="tag tag-ux">ux</span></div>
+    </div>
+  </div>
+</div>
+<footer>
+  <p>AuraCore v0.4.0 · <a href="https://github.com/lamin-16/auracore">GitHub</a> · <a href="index.html">Home</a></p>
+</footer>
+</body>
+</html>

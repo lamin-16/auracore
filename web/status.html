@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraCore Status</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a0f;color:#e2e8f0}
+    nav{background:rgba(0,0,0,.8);border-bottom:1px solid rgba(255,255,255,.08);padding:1rem 2rem;display:flex;align-items:center;gap:1.5rem;position:sticky;top:0;z-index:100}
+    .nav-logo{font-weight:900;font-size:1.2rem;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    nav a{color:#64748b;text-decoration:none;font-size:.9rem}
+    nav a:hover{color:#e2e8f0}
+    .container{max-width:800px;margin:0 auto;padding:4rem 2rem}
+    h1{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
+    .subtitle{color:#64748b;margin-bottom:3rem}
+    .status-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:1rem;padding:1.5rem;margin-bottom:1rem}
+    .status-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+    .status-name{font-weight:600;color:#e2e8f0}
+    .badge-ok{background:rgba(34,197,94,.2);border:1px solid rgba(34,197,94,.4);color:#4ade80;padding:.3rem .8rem;border-radius:9999px;font-size:.8rem}
+    .badge-warn{background:rgba(234,179,8,.2);border:1px solid rgba(234,179,8,.4);color:#fbbf24;padding:.3rem .8rem;border-radius:9999px;font-size:.8rem}
+    .stat-row{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.9rem}
+    .stat-row:last-child{border-bottom:none}
+    .stat-key{color:#64748b}
+    .stat-val{color:#e2e8f0;font-weight:500}
+    .updated{text-align:center;color:#334155;font-size:.8rem;margin-top:2rem}
+    footer{text-align:center;padding:3rem 2rem;color:#334155;border-top:1px solid rgba(255,255,255,.05);margin-top:4rem}
+    footer a{color:#818cf8;text-decoration:none}
+  </style>
+</head>
+<body>
+<nav>
+  <span class="nav-logo">AuraCore</span>
+  <a href="index.html">Home</a>
+  <a href="docs.html">Docs</a>
+  <a href="roadmap.html">Roadmap</a>
+  <a href="status.html" style="color:#e2e8f0">Status</a>
+  <a href="https://github.com/lamin-16/auracore">GitHub</a>
+</nav>
+<div class="container">
+  <h1>Project Status</h1>
+  <p class="subtitle">AuraCore v0.4.0 — current build and module status.</p>
+
+  <div class="status-card">
+    <div class="status-header">
+      <span class="status-name">Build Status</span>
+      <span class="badge-ok">Passing</span>
+    </div>
+    <div class="stat-row"><span class="stat-key">Version</span><span class="stat-val">v0.4.0-alpha (Quartz)</span></div>
+    <div class="stat-row"><span class="stat-key">Language</span><span class="stat-val">Mojo</span></div>
+    <div class="stat-row"><span class="stat-key">Lines of Code</span><span class="stat-val">2,400+</span></div>
+    <div class="stat-row"><span class="stat-key">Source Files</span><span class="stat-val">9 modules</span></div>
+    <div class="stat-row"><span class="stat-key">Dependencies</span><span class="stat-val">Zero</span></div>
+    <div class="stat-row"><span class="stat-key">License</span><span class="stat-val">MIT</span></div>
+  </div>
+
+  <div class="status-card">
+    <div class="status-header">
+      <span class="status-name">Security Modules</span>
+      <span class="badge-ok">All Active</span>
+    </div>
+    <div class="stat-row"><span class="stat-key">secure_vault.mojo</span><span class="stat-val">AES-256-GCM</span></div>
+    <div class="stat-row"><span class="stat-key">backup_manager.mojo</span><span class="stat-val">Encrypted backups</span></div>
+    <div class="stat-row"><span class="stat-key">export_manager.mojo</span><span class="stat-val">TTL bundles</span></div>
+    <div class="stat-row"><span class="stat-key">audit_logger.mojo</span><span class="stat-val">Append-only log</span></div>
+    <div class="stat-row"><span class="stat-key">lock_timer.mojo</span><span class="stat-val">Auto-lock 5min</span></div>
+  </div>
+
+  <div class="status-card">
+    <div class="status-header">
+      <span class="status-name">Agent Modules</span>
+      <span class="badge-ok">All Active</span>
+    </div>
+    <div class="stat-row"><span class="stat-key">agent_core.mojo</span><span class="stat-val">4096 token context</span></div>
+    <div class="stat-row"><span class="stat-key">agent_config.mojo</span><span class="stat-val">Encrypted config</span></div>
+    <div class="stat-row"><span class="stat-key">memory_manager.mojo</span><span class="stat-val">100 turn memory</span></div>
+    <div class="stat-row"><span class="stat-key">cli_interface.mojo</span><span class="stat-val">EN commands / DE output</span></div>
+  </div>
+
+  <div class="status-card">
+    <div class="status-header">
+      <span class="status-name">Cryptographic Standards</span>
+      <span class="badge-ok">FIPS 140-3</span>
+    </div>
+    <div class="stat-row"><span class="stat-key">Encryption</span><span class="stat-val">AES-256-GCM</span></div>
+    <div class="stat-row"><span class="stat-key">KDF</span><span class="stat-val">PBKDF2-HMAC-SHA512</span></div>
+    <div class="stat-row"><span class="stat-key">Iterations</span><span class="stat-val">600,000</span></div>
+    <div class="stat-row"><span class="stat-key">Salt</span><span class="stat-val">256-bit random</span></div>
+    <div class="stat-row"><span class="stat-key">IV</span><span class="stat-val">96-bit per lock()</span></div>
+    <div class="stat-row"><span class="stat-key">Auth Tag</span><span class="stat-val">128-bit GCM</span></div>
+  </div>
+
+  <div class="status-card">
+    <div class="status-header">
+      <span class="status-name">Infrastructure</span>
+      <span class="badge-ok">Online</span>
+    </div>
+    <div class="stat-row"><span class="stat-key">GitHub</span><span class="stat-val">github.com/lamin-16/auracore</span></div>
+    <div class="stat-row"><span class="stat-key">Website</span><span class="stat-val">Vercel (auto-deploy)</span></div>
+    <div class="stat-row"><span class="stat-key">CI/CD</span><span class="stat-val">GitHub Actions</span></div>
+    <div class="stat-row"><span class="stat-key">Last Deploy</span><span class="stat-val">2026-09-23</span></div>
+  </div>
+
+  <p class="updated">Last updated: 2026-09-23 · AuraCore v0.4.0</p>
+</div>
+<footer>
+  <p>AuraCore v0.4.0 · <a href="https://github.com/lamin-16/auracore">GitHub</a> · <a href="index.html">Home</a></p>
+</footer>
+</body>
+</html>
